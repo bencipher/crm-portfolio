@@ -24,7 +24,7 @@ SECRET_KEY = 'django-insecure-08^s&v1mh36071zj8vt+!z8moh$0lenv0p(zz-hjy&!0q!)*g^
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', 'bcx-portfolio-crm.herokuapp.com']
 
 # Application definition
 
