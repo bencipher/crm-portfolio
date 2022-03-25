@@ -151,7 +151,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'users.CustomUser'
 
 REST_FRAMEWORK = {
-    # 'EXCEPTION_HANDLER': 'utilities.exceptions.custom_exception_handler',
+    'EXCEPTION_HANDLER': 'utilities.exceptions.custom_exception_handler',
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'PAGE_SIZE': 25,
     'DEFAULT_AUTHENTICATION_CLASS': ('gateway.authentication.Authentication')

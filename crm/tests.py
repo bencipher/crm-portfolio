@@ -44,7 +44,7 @@ class AgentsTest(TestCase):
         browser = Client()
         login_payload = {
             "email": "testuseremail@mail.com",
-            "password": "testuserpass",
+            "password": "testuserpass"
         }
 
         login_response = browser.post(path="/gateway/login/", data=login_payload,
@@ -62,7 +62,7 @@ class AgentsTest(TestCase):
         browser = Client()
         login_payload = {
             "email": "testuseremail@mail.com",
-            "password": "testuserpass",
+            "password": "testuserpass"
         }
 
         login_response = browser.post(path="/gateway/login/", data=login_payload,
@@ -79,7 +79,7 @@ class AgentsTest(TestCase):
         browser = Client()
         login_payload = {
             "email": "testuseremail@mail.com",
-            "password": "testuserpass",
+            "password": "testuserpass"
         }
         agent_data = {
             "user": {
@@ -135,7 +135,7 @@ class LeadTests(TestCase):
         browser = Client()
         login_payload = {
             "email": "test@mail.com",
-            "password": "testuserpass",
+            "password": "testuserpass"
         }
 
         login_response = browser.post(path="/gateway/login/", data=login_payload,
@@ -152,7 +152,7 @@ class LeadTests(TestCase):
         browser = Client()
         login_payload = {
             "email": "test@mail.com",
-            "password": "testuserpass",
+            "password": "testuserpass"
         }
 
         login_response = browser.post(path="/gateway/login/", data=login_payload,
@@ -169,7 +169,7 @@ class LeadTests(TestCase):
         browser = Client()
         login_payload = {
             "email": "test@mail.com",
-            "password": "testuserpass",
+            "password": "testuserpass"
         }
         agent = Agent.objects.first()
         lead_data = {

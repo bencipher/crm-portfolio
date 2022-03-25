@@ -17,8 +17,5 @@ class FilterModel(BaseModel):
 class ElasticSearchRequest(BaseModel):
     query: Optional[str]
     object_type: ObjectEnum
-    filters: List[FilterModel] = []
     start_hits: int = 0
     page_size: int = 50
-    sort: Optional[str]
-    sort_order: Optional[SortOrder]

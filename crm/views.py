@@ -9,7 +9,7 @@ from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnl
 
 class AgentViewset(viewsets.ModelViewSet):
     authentication_classes = [Authentication]
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
     serializer_class = AgentSerializer
     queryset = Agent.objects.all()
 
