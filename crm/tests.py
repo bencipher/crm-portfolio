@@ -24,8 +24,6 @@ class AgentsTest(TestCase):
         agent = Agent.objects.create(user=user, id=1)
         agent.save()
 
-        # factory = APIRequestFactory()
-
     def test_user_object(self):
         user = CustomUser.objects.get(id=1)
         expected_object_email = f"{user.email}"
@@ -51,6 +49,7 @@ class AgentsTest(TestCase):
                                       content_type="application/json", follow=True,
                                       secure=False, HTTP_ACCEPT='application/json')
         agent_id = Agent.objects.first().id
+
         response = browser.get(path="/agents/{}".format(agent_id), follow=True,
                                secure=False,
                                HTTP_ACCEPT='application/json', content_type="application/json",
@@ -99,6 +98,23 @@ class AgentsTest(TestCase):
                                secure=False,
                                HTTP_ACCEPT='application/json', content_type="application/json",
                                headers={'Authorization': login_response.data['access'].decode()})
+        self.assertEqual(response.status_code, 200)
+
+    def test_delete_agent(self):
+        browser = Client()
+        login_payload = {
+            "email": "testuseremail@mail.com",
+            "password": "testuserpass"
+        }
+        login_response = browser.post(path="/gateway/login/", data=login_payload,
+                                      content_type="application/json", follow=True,
+                                      secure=False, HTTP_ACCEPT='application/json')
+        agent_id = Agent.objects.first().id
+
+        response = browser.delete(path="/agents/{}".format(agent_id), follow=True,
+                                  secure=False,
+                                  HTTP_ACCEPT='application/json', content_type="application/json",
+                                  headers={'Authorization': login_response.data['access'].decode()})
         self.assertEqual(response.status_code, 200)
 
 
@@ -191,4 +207,21 @@ class LeadTests(TestCase):
                                secure=False,
                                HTTP_ACCEPT='application/json', content_type="application/json",
                                headers={'Authorization': login_response.data['access'].decode()})
+        self.assertEqual(response.status_code, 200)
+
+    def test_delete_lead(self):
+        browser = Client()
+        login_payload = {
+            "email": "test@mail.com",
+            "password": "testuserpass"
+        }
+        login_response = browser.post(path="/gateway/login/", data=login_payload,
+                                      content_type="application/json", follow=True,
+                                      secure=False, HTTP_ACCEPT='application/json')
+        lead_id = Lead.objects.first().id
+
+        response = browser.delete(path="/leads/{}".format(lead_id), follow=True,
+                                  secure=False,
+                                  HTTP_ACCEPT='application/json', content_type="application/json",
+                                  headers={'Authorization': login_response.data['access'].decode()})
         self.assertEqual(response.status_code, 200)

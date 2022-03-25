@@ -17,10 +17,11 @@ class Authentication(BaseAuthentication):
         print(f"Header is {token}")
         decoded_data = Authentication.verify_token(token)
 
+
         if not decoded_data:
             return None
             # raise Exception('Token expired or invalid')
-
+        print(decoded_data)
         return decoded_data
 
     def authenticate(self, request):
