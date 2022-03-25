@@ -14,6 +14,7 @@ import os
 from decouple import config
 from pathlib import Path
 from elasticsearch import RequestsHttpConnection
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -22,10 +23,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-08^s&v1mh36071zj8vt+!z8moh$0lenv0p(zz-hjy&!0q!)*g^'
-
+SECRET_KEY = config('secret_key')
+environment = config('env', None)
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+if environment == 'local':
+    DEBUG = True
+else:
+    DEBUG = False
 ALLOWED_HOSTS = ['localhost', 'bcx-portfolio-crm.herokuapp.com', '127.0.0.1']
 
 # Application definition
@@ -47,8 +51,7 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'django_seed',
     'django_elasticsearch_dsl',
-    # 'elasticsearch-dsl',
-    # 'elasticsearch'
+    'whitenoise.runserver_nostatic'
 ]
 
 MIDDLEWARE = [
@@ -95,6 +98,8 @@ DATABASES = {
         'HOST': 'localhost',
     }
 }
+db_from_env = dj_database_url.config(conn_max_age=600)
+DATABASES['default'].update(db_from_env)
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
@@ -161,3 +166,6 @@ ELASTICSEARCH_DSL = {
         'connection_class': RequestsHttpConnection
     }
 }
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
