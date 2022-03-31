@@ -30,7 +30,8 @@ class AgentSerializer(serializers.ModelSerializer):
 
 
 class LeadSerializer(serializers.ModelSerializer):
-    assignee = ReadWriteSerializerMethodField(required=False)
+    assignee_id = serializers.IntegerField(write_only=True)
+    assignee = ReadWriteSerializerMethodField(read_only=True)
 
     class Meta:
         model = Lead
@@ -43,12 +44,17 @@ class LeadSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         is_customer = False
+
+        # ensure confirmed customers stage is not changed
+        if instance.is_customer:
+            assert validated_data['stage'] == 'Converted' and validated_data[
+                'is_customer'] is True, ' Cannot change stage of already converted lead'
+
+        # check if status is converted before updating to customer
         if validated_data.get('is_customer'):
-            assert instance.stage == 'Converted', f'Lead of stage "{instance.stage}" cannot be converted to Customer'
-            is_customer = validated_data.pop('assignee')
-        if validated_data.get('assignee'):
-            assignee = validated_data.pop('assignee')
-            validated_data[assignee] = Agent.objects.get(id=assignee)
+            assert instance.stage == 'Converted' or validated_data[
+                'stage'] == 'Converted', f"Lead of stage '{instance.stage}' cannot be converted  to Customer"
+
         Lead.objects.filter(id=instance.id).update(**validated_data)
         lead = Lead.objects.get(id=instance.id)
         lead.is_customer = is_customer

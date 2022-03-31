@@ -30,7 +30,7 @@ class Lead(models.Model):
     gender = models.TextField(null=True, choices=gender_choices)
     marital_status = models.TextField(null=True, choices=marital_choices)
     source = models.CharField(max_length=50, choices=sources, null=True, blank=True)
-    stage = models.CharField(max_length=50, choices=stages, null=True, blank=True)
+    stage = models.CharField(max_length=50, choices=stages, null=True, blank=True, default='New')
     date_created = models.DateTimeField(auto_now_add=True, null=True, blank=True)
     date_updated = models.DateTimeField(auto_now=True, null=True, blank=True)
     assignee = models.ForeignKey(Agent, on_delete=models.SET_NULL, null=True, related_name='agent')

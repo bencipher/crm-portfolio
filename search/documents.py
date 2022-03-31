@@ -4,18 +4,8 @@ from crm.models import Lead, Agent
 from users.models import CustomUser
 
 
-# html_strip = analyzer(
-#     'html_strip',
-#     tokenizer="standard",
-#     filter=["lowercase", "stop", "snowball"],
-#     char_filter=["html_strip"]
-# )
-
-
 @registry.register_document
 class LeadDocument(Document):
-
-
     class Index:
         # Name of the Elasticsearch index
         name = 'lead'
@@ -68,8 +58,6 @@ class LeadDocument(Document):
 
 @registry.register_document
 class AgentDocument(Document):
-
-
     class Index:
         # Name of the Elasticsearch index
         name = 'agent'

@@ -8,5 +8,4 @@ router.register(r'leads', LeadViewset, basename='leads')
 
 urlpatterns = [
     re_path(r'^', include(router.urls)),
-    path('', convert_lead_to_customer, name='convert-lead'),
 ]
