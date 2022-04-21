@@ -55,6 +55,11 @@ class LeadDocument(Document):
         if isinstance(related_instance, Lead):
             return related_instance.agent_set.all()
 
+    def prepare_sources(self, instance):
+        print('Inside Lead Documents')
+        print(instance.__dict__)
+        exit()
+
 
 @registry.register_document
 class AgentDocument(Document):
@@ -91,3 +96,8 @@ class AgentDocument(Document):
     def get_instances_from_related(self, related_instance):
         if isinstance(related_instance, Agent):
             return related_instance.agent_set.all()
+
+    def prepare_sources(self, instance):
+        print('Inside Agent Documents')
+        print(instance.__dict__)
+        exit()

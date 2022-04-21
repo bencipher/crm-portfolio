@@ -21,7 +21,9 @@ class AgentSerializer(serializers.ModelSerializer):
         user_data = validated_data.pop('user')
         user_data.pop('password', None)
         CustomUser.objects.filter(id=instance.user.id).update(**user_data)
-        return Agent.objects.get(id=instance.id)
+        instance.user = CustomUser.objects.get(id=instance.user.id)
+        instance.save()
+        return super().update(instance, validated_data)
 
     def get_user(self, obj):
         if obj.user:
@@ -55,7 +57,6 @@ class LeadSerializer(serializers.ModelSerializer):
             assert instance.stage == 'Converted' or validated_data[
                 'stage'] == 'Converted', f"Lead of stage '{instance.stage}' cannot be converted  to Customer"
 
-        Lead.objects.filter(id=instance.id).update(**validated_data)
-        lead = Lead.objects.get(id=instance.id)
-        lead.is_customer = is_customer
-        return lead
+        instance.is_customer = is_customer
+        instance.save()
+        return super().update(instance, validated_data)

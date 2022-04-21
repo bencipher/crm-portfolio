@@ -13,6 +13,8 @@ import os
 
 from decouple import config
 from pathlib import Path
+
+from django.db.models.signals import post_delete
 from elasticsearch import RequestsHttpConnection
 import dj_database_url
 
@@ -153,7 +155,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'users.CustomUser'
 
 REST_FRAMEWORK = {
-    'EXCEPTION_HANDLER': 'utilities.exceptions.custom_exception_handler',
+    # 'EXCEPTION_HANDLER': 'utilities.exceptions.custom_exception_handler',
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'PAGE_SIZE': 25,
     'DEFAULT_AUTHENTICATION_CLASS': ('gateway.authentication.Authentication')
@@ -171,3 +173,4 @@ ELASTICSEARCH_DSL = {
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
